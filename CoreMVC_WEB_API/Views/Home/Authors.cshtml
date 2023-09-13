@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Authors</h2>
+
+<table id="authorsTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<br />
+<input type="button" class="btn btn-primary" id="show" value="Show" />
+<input type="button" class="btn" id="state" value="Show by state" />
+<input type="button" class="btn" id="create" value="Create" />
+<input type="button" class="btn" id="update" value="Update" />
+<br />
+
+<script>
+
+    $('#show').click(function (e) {
+        //alert('show');
+
+        // подача Ajax-запроса на сервер при помощи JQuery
+        $.ajax({
+            url: '/api/authors',
+            method: "GET",
+            dataType: 'JSON',
+            contentType: 'application/json',
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+
+                // получить ссылку на таблицу с результатами
+                var table = $('#authorsTable');
+
+                // удалить все старые строки
+                table.find("tbody tr").remove();
+
+                // перебрать коллекцию в Json и создать новые строки таблицы на их основе
+                data.forEach(function (author) {
+                    table.append("<tr><td>" + author.auId +
+                        "</td><td>" + author.auFname + ' ' + author.auLname +
+                        "</td><td>" + author.city +
+                        "</td><td>" + author.state +
+                        "</td><td>" + author.phone +
+                        "</td><td><button class='btn-link js-edit' data-au-id=" + author.auId + ">Edit</button>&nbsp;<button class='btn-link js-delete' data-au-id=" + author.au_id + ">Delete</button></td></tr>");
+                });
+            }
+        })
+    });
+
+</script>
