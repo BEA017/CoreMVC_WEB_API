@@ -7,6 +7,7 @@ namespace CoreMVC_WEB_API
     {
         public static void Main(string[] args)
         {
+			//start
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
